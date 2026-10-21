@@ -1,259 +1,133 @@
 # Campus AI Chatbot
 
-A working prototype of an AI-powered support chatbot for the Kempton Park Campus communication platform.
+A campus-support chatbot prototype built using Python, FastAPI, the OpenAI API, tool calling, and JSON data files.
 
-## Live Chatbot
+## Live Demo
 
-Open the chatbot here:
+Open the deployed chatbot:
 
 https://campus-ai-chatbot-fpjv.onrender.com/
 
-The chatbot runs on Render’s cloud server. It remains accessible when the developer’s computer, PowerShell and VS Code are switched off.
+The first load may take a short while because the free Render service sleeps when inactive.
 
-## How to Use It
-
-1. Open the chatbot link.
-2. Enter a unique demo user ID.
-3. Type a message.
-4. Select **Send**.
-
-Each tester should use a different demo ID because conversation history is currently associated with the entered ID.
-
-Examples:
-
-```text
-TEST-AMAN
-TEST-DEAN
-TEST-RIAN
-```
-
-Testers do not need to:
-
-- Install Python.
-- Download the project.
-- Run the application locally.
-- Create an OpenAI account.
-- Provide an API key.
-
-The OpenAI API key is stored securely on Render and used by the FastAPI backend.
-
-## API Documentation
-
-The FastAPI testing page is available at:
+FastAPI testing interface:
 
 https://campus-ai-chatbot-fpjv.onrender.com/docs
-
-## Health Check
-
-The server health check is available at:
-
-https://campus-ai-chatbot-fpjv.onrender.com/health
-
-A working server returns:
-
-```json
-{
-  "status": "healthy"
-}
-```
 
 ## Current Features
 
 The chatbot can:
 
-- Retrieve active campus notices.
-- Retrieve active safety risks.
-- Summarize recent campus emails.
-- Search the campus staff directory.
-- Check the status of support tickets.
-- Prevent one user from accessing another user’s ticket.
-- Collect information for a new support ticket.
-- Request confirmation before creating a ticket.
-- Log unanswered campus inquiries after confirmation.
-- Maintain conversation context while the server is running.
-- Display responses through a browser-based chat interface.
+- Display active campus notices
+- Search the campus staff directory
+- Check a user’s support-ticket status
+- Create support tickets after confirmation
+- Display active campus safety risks
+- Summarize recent campus emails
+- Log unanswered questions as inquiries
+- Remember previous messages during the current session
 
 ## How It Works
 
 ```text
-User’s browser
-      |
-      v
-Render cloud server
-      |
-      v
-FastAPI /chat endpoint
-      |
-      v
-OpenAI Responses API
-      |
-      v
-Controlled chatbot tools
-      |
-      v
-Mock campus JSON data
+Browser interface
+       |
+       v
+FastAPI backend
+       |
+       +--> OpenAI API
+       |
+       +--> JSON data files
+
+## Running Locally to View How Data Is Stored
+
+Team members can run their own local copy if they want to inspect the code and watch the chatbot store tickets and inquiries.
+
+### 1. Clone the Repository
+
+```powershell
+git clone https://github.com/harriperSoda/campus-ai-chatbot.git
+cd campus-ai-chatbot
 ```
 
-The AI handles the conversation and chooses an appropriate tool.
+Because the repository is private, you must first be added as a GitHub collaborator.
 
-The Python backend performs the actual data operations. The AI does not have unrestricted access to the application files.
+### 2. Create and Activate the Python Environment
 
-## Project Structure
-
-```text
-campus-ai-chatbot/
-|
-|-- app/
-|   |-- __init__.py
-|   |-- main.py
-|   |-- ai_provider.py
-|   |-- chat_tools.py
-|   |-- data_store.py
-|   |
-|   `-- static/
-|       |-- index.html
-|       |-- styles.css
-|       `-- chat.js
-|
-|-- data/
-|   |-- notices.json
-|   |-- tickets.json
-|   |-- staff.json
-|   |-- risks.json
-|   |-- email_summaries.json
-|   `-- inquiries.json
-|
-|-- .gitignore
-|-- requirements.txt
-`-- README.md
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-## Main Files
+### 3. Install the Requirements
 
-### `app/main.py`
+```powershell
+python -m pip install -r requirements.txt
+```
 
-Creates the FastAPI application and provides:
+### 4. Add the Project API Key
 
-- The browser interface.
-- The `/chat` endpoint.
-- The `/health` endpoint.
-- The API documentation.
+The project owner will provide the `.env` settings privately, so team members do not need to purchase their own API credits.
 
-### `app/ai_provider.py`
+Create a file called `.env` in the main `campus-ai-chatbot` folder:
 
-Handles:
+```env
+OPENAI_API_KEY=the_private_test_key  DM ME FOR IT
+OPENAI_MODEL=gpt-6-luna
+```
 
-- OpenAI API communication.
-- System instructions.
-- Conversation context.
-- AI tool calls.
-- Ticket and inquiry confirmation rules.
+Do not upload or commit the `.env` file to GitHub.
 
-### `app/chat_tools.py`
+### 5. Start the Chatbot
 
-Defines the functions available to the AI, including:
+```powershell
+python -m uvicorn app.main:app --reload
+```
 
-- Retrieving campus notices.
-- Retrieving ticket information.
-- Creating support tickets.
-- Searching the staff directory.
-- Retrieving safety risks.
-- Retrieving email summaries.
-- Creating unanswered inquiries.
+Open the chatbot at:
 
-### `app/data_store.py`
+http://127.0.0.1:8000/
 
-Reads and writes the current JSON mock data.
+The FastAPI testing page is available at:
 
-The data-access logic is kept separate so the JSON files can later be replaced with SharePoint Lists.
+http://127.0.0.1:8000/docs
 
-### `app/static/`
+### Viewing the Stored Data
 
-Contains the browser interface:
+The prototype currently stores information in JSON files inside the `data` folder:
 
-- `index.html` defines the page.
-- `styles.css` controls the appearance.
-- `chat.js` communicates with the `/chat` endpoint.
-
-## Support Ticket Workflow
-
-When a user reports a problem, the chatbot:
-
-1. Collects the issue.
-2. Requests the location.
-3. Requests when the problem occurred.
-4. Determines the category.
-5. Collects additional details.
-6. Summarizes the proposed ticket.
-7. Requests confirmation.
-8. Creates the ticket after confirmation.
-9. Returns the ticket ID and status.
-
-## Unanswered Inquiry Workflow
-
-When a campus-specific question cannot be answered, the chatbot:
-
-1. Explains that the information is unavailable.
-2. Offers to log an inquiry.
-3. Determines the category.
-4. Summarizes the inquiry.
-5. Requests confirmation.
-6. Creates the inquiry after confirmation.
-7. Returns the inquiry ID and status.
-
-## Current Data
-
-The prototype currently uses local JSON files:
-
-| File | Purpose |
+| File | Stored information |
 |---|---|
-| `notices.json` | Campus notices |
-| `tickets.json` | Support tickets |
-| `staff.json` | Staff directory |
-| `risks.json` | Campus safety risks |
-| `email_summaries.json` | Campus email summaries |
-| `inquiries.json` | Unanswered inquiries |
+| `data/tickets.json` | Created support and security tickets |
+| `data/inquiries.json` | Unanswered questions logged as inquiries |
+| `data/notices.json` | Campus notices |
+| `data/staff.json` | Staff-directory information |
+| `data/risks.json` | Existing campus safety risks |
+| `data/email_summaries.json` | Campus email summaries |
 
-## Planned Integration
+### Testing Ticket Storage
 
-The final application will replace the JSON files with SharePoint Lists.
+1. Open `data/tickets.json` in VS Code.
+2. Use the locally running chatbot to report a problem.
+3. Give the chatbot the requested details.
+4. Confirm that the ticket should be submitted.
+5. Return to `data/tickets.json`.
+6. The newly created ticket should now appear in the file.
 
-```text
-Power Apps interface
-        |
-        v
-Hosted FastAPI chatbot
-        |
-        +----> OpenAI API
-        |
-        v
-Microsoft Graph
-        |
-        v
-SharePoint Lists
-        |
-        +----> Power Automate workflows
-        |
-        `----> Power BI reporting
-```
+### Testing Inquiry Storage
 
-The chatbot’s existing data functions will be updated to read and write SharePoint data instead of JSON.
+1. Ask a campus-specific question the chatbot cannot answer.
+2. Confirm when the chatbot asks to log it.
+3. Open `data/inquiries.json`.
+4. The new inquiry should appear in the file.
 
-Power Automate will respond to SharePoint changes, such as:
+### How Local Storage Works
 
-- A new support ticket being created.
-- A new inquiry requiring follow-up.
-- A ticket requiring assignment or escalation.
-- A new urgent campus alert.
+Each team member has a separate local copy of the data.
 
-## Current Limitations
-
-- The entered user ID is not verified authentication.
-- Conversation history is lost when the Render server restarts.
-- Testers using the same ID may share conversation context.
-- The JSON files are temporary development storage.
-- Tickets and inquiries saved on Render can be lost after a restart or redeployment.
-- The first request may take longer if the free Render service has been inactive.
-- OpenAI API usage is charged to the maintainer’s account.
-
-These limitations will be addressed when the chatbot is connected to authenticated users and SharePoint Lists.
+- Local tickets only appear in that person’s `data/tickets.json`.
+- Local records do not automatically appear on Render.
+- Local records do not automatically upload to GitHub.
+- One team member’s local records do not change another member’s files.
+- The local server stops when its PowerShell window is closed.
+- The separate Render deployment remains available when local computers are switched off.
