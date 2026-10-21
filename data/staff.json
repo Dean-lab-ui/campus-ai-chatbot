@@ -1,0 +1,38 @@
+[
+  {
+    "staff_id": "S001",
+    "name": "IT Support Desk",
+    "department": "Information Technology",
+    "role": "Technical support",
+    "email": "it-support@campus.example",
+    "office": "Admin Block A12",
+    "active": true
+  },
+  {
+    "staff_id": "S002",
+    "name": "Registration Office",
+    "department": "Administration",
+    "role": "Student registration assistance",
+    "email": "registration@campus.example",
+    "office": "Admin Block G04",
+    "active": true
+  },
+  {
+    "staff_id": "S003",
+    "name": "Library Help Desk",
+    "department": "Library",
+    "role": "Library and learning-resource assistance",
+    "email": "library@campus.example",
+    "office": "Campus Library",
+    "active": true
+  },
+  {
+    "staff_id": "S004",
+    "name": "Former Facilities Contact",
+    "department": "Facilities",
+    "role": "Maintenance support",
+    "email": "former-facilities@campus.example",
+    "office": "Maintenance Building",
+    "active": false
+  }
+]

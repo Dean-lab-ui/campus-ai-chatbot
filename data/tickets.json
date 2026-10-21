@@ -1,0 +1,48 @@
+[
+  {
+    "ticket_id": "T001",
+    "user_id": "603758",
+    "category": "IT",
+    "issue": "Wi-Fi unavailable",
+    "location": "Lab 3",
+    "status": "In Progress"
+  },
+  {
+    "ticket_id": "T002",
+    "user_id": "603758",
+    "category": "Facilities",
+    "issue": "Broken classroom projector",
+    "location": "Room B12",
+    "status": "Open"
+  },
+  {
+    "ticket_id": "T003",
+    "user_id": "700111",
+    "category": "IT",
+    "issue": "Unable to access student portal",
+    "location": "Library",
+    "status": "Resolved"
+  },
+  {
+    "ticket_id": "T004",
+    "user_id": "603758",
+    "category": "IT",
+    "issue": "Broken Wi-Fi",
+    "location": "Lab 4",
+    "reported_time": "Today at about 14:30",
+    "details": "The BC-Student network shows an unable-to-connect error.",
+    "status": "Open",
+    "created_at": "2026-10-21T17:09:36.211313+00:00"
+  },
+  {
+    "ticket_id": "T005",
+    "user_id": "603758",
+    "category": "IT",
+    "issue": "Wi-Fi not working",
+    "location": "Gamma classroom",
+    "reported_time": "Today",
+    "details": "No error messages.",
+    "status": "Open",
+    "created_at": "2026-10-21T17:58:21.383393+00:00"
+  }
+]

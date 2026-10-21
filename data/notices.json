@@ -1,0 +1,26 @@
+[
+  {
+    "notice_id": "N001",
+    "title": "Library operating hours",
+    "content": "The campus library will close at 18:00 on Friday.",
+    "campus": "Kempton Park",
+    "category": "Library",
+    "active": true
+  },
+  {
+    "notice_id": "N002",
+    "title": "Network maintenance",
+    "content": "Campus Wi-Fi may be unavailable between 19:00 and 21:00 on Saturday.",
+    "campus": "Kempton Park",
+    "category": "IT",
+    "active": true
+  },
+  {
+    "notice_id": "N003",
+    "title": "Expired registration notice",
+    "content": "Registration assistance was available last week.",
+    "campus": "Kempton Park",
+    "category": "Administration",
+    "active": false
+  }
+]

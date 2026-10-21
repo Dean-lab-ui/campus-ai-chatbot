@@ -1,0 +1,26 @@
+[
+  {
+    "risk_id": "R001",
+    "title": "Wet floor near the library entrance",
+    "description": "A water leak has made the floor slippery near the main library entrance.",
+    "location": "Campus Library",
+    "severity": "Medium",
+    "active": true
+  },
+  {
+    "risk_id": "R002",
+    "title": "Parking-area lighting fault",
+    "description": "Several lights are not working in the eastern student parking area.",
+    "location": "East Parking Area",
+    "severity": "High",
+    "active": true
+  },
+  {
+    "risk_id": "R003",
+    "title": "Resolved walkway obstruction",
+    "description": "A blocked walkway has been cleared.",
+    "location": "Administration Block",
+    "severity": "Low",
+    "active": false
+  }
+]

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kempton Campus Assistant</title>
+
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <main class="chat-app">
+        <header class="chat-header">
+            <div class="assistant-icon">KC</div>
+
+            <div>
+                <h1>Campus Support Assistant</h1>
+                <p>Kempton Park Campus</p>
+            </div>
+
+            <span id="connectionStatus" class="status">Ready</span>
+        </header>
+
+        <section class="user-section">
+            <label for="userId">Demo user ID</label>
+            <input
+                id="userId"
+                type="text"
+                value="603758"
+                autocomplete="off"
+            >
+        </section>
+
+        <section
+            id="messages"
+            class="messages"
+            aria-live="polite"
+        >
+            <div class="message assistant-message">
+                <div class="message-label">Campus Assistant</div>
+
+                <div class="message-bubble">
+                    Hello! I can help you check campus notices, safety
+                    risks, email summaries, staff contacts and support
+                    tickets. What would you like to know?
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions" aria-label="Suggested questions">
+            <button
+                type="button"
+                class="quick-action"
+                data-message="What active campus notices are available?"
+            >
+                Campus notices
+            </button>
+
+            <button
+                type="button"
+                class="quick-action"
+                data-message="Are there any active campus safety risks?"
+            >
+                Safety risks
+            </button>
+
+            <button
+                type="button"
+                class="quick-action"
+                data-message="Summarize the recent campus emails."
+            >
+                Email summaries
+            </button>
+
+            <button
+                type="button"
+                class="quick-action"
+                data-message="Who can help me with registration?"
+            >
+                Staff directory
+            </button>
+        </section>
+
+        <form id="chatForm" class="message-form">
+            <label for="messageInput" class="visually-hidden">
+                Type your message
+            </label>
+
+            <textarea
+                id="messageInput"
+                rows="1"
+                placeholder="Ask the campus assistant..."
+                required
+            ></textarea>
+
+            <button id="sendButton" type="submit">
+                Send
+            </button>
+        </form>
+
+        <p class="keyboard-hint">
+            Press Enter to send. Use Shift + Enter for a new line.
+        </p>
+    </main>
+
+    <script src="/static/chat.js"></script>
+</body>
+</html>

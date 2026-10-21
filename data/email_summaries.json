@@ -1,0 +1,26 @@
+[
+  {
+    "email_id": "E001",
+    "subject": "Examination timetable update",
+    "summary": "Students should check the updated examination timetable because several venue assignments have changed.",
+    "category": "Academic",
+    "received_date": "2026-10-20",
+    "active": true
+  },
+  {
+    "email_id": "E002",
+    "subject": "Library access this weekend",
+    "summary": "The library will operate with reduced hours this weekend due to scheduled maintenance.",
+    "category": "Library",
+    "received_date": "2026-10-19",
+    "active": true
+  },
+  {
+    "email_id": "E003",
+    "subject": "Previous registration reminder",
+    "summary": "Students were reminded to complete registration.",
+    "category": "Administration",
+    "received_date": "2026-09-10",
+    "active": false
+  }
+]
