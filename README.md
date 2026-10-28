@@ -20,12 +20,14 @@ The chatbot can:
 
 - Display active campus notices
 - Search the campus staff directory
-- Check a user’s support-ticket status
+- Check a user's support-ticket status
 - Create support tickets after confirmation
 - Display active campus safety risks
 - Summarize recent campus emails
 - Log unanswered questions as inquiries
 - Remember previous messages during the current session
+- Answer questions about the Belgium Campus academic calendar
+- Refresh the academic calendar from the public website on demand
 
 ## How It Works
 
@@ -104,6 +106,8 @@ The prototype currently stores information in JSON files inside the `data` folde
 | `data/staff.json` | Staff-directory information |
 | `data/risks.json` | Existing campus safety risks |
 | `data/email_summaries.json` | Campus email summaries |
+| `data/calendar_events.json` | Belgium Campus academic-calendar events (fetched from the public website) |
+| `data/calendar_by_date.json` | Calendar events expanded per date, used to answer date questions |
 
 ### Testing Ticket Storage
 

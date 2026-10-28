@@ -4,7 +4,13 @@ from app.data_store import (
     get_active_email_summaries,
     get_active_notices,
     get_active_risks,
+    get_calendar_categories,
+    get_calendar_events_in_range,
+    get_calendar_events_on_date,
+    get_calendar_overview,
     get_ticket,
+    refresh_calendar,
+    search_calendar_events,
     search_staff,
 )
 
@@ -175,6 +181,122 @@ TOOL_DEFINITIONS = [
         },
         "strict": True,
     },
+    {
+        "type": "function",
+        "name": "refresh_calendar",
+        "description": (
+            "Fetch the latest Belgium Campus academic calendar from the "
+            "public website and store it in the data folder for the chatbot "
+            "to use. Use this when the user asks to refresh, update, or "
+            "re-download the calendar, or when calendar data appears missing "
+            "or out of date. This makes an external web request."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
+        "name": "get_calendar_events_on_date",
+        "description": (
+            "Get every event active on a single calendar date. "
+            "Use this when the user asks what is happening on a specific day."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "description": "ISO date YYYY-MM-DD.",
+                }
+            },
+            "required": ["date"],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
+        "name": "get_calendar_events_in_range",
+        "description": (
+            "Get every event active within an inclusive date range. "
+            "Use this when the user asks about a week, month, or any span "
+            "of dates."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "string",
+                    "description": "ISO date YYYY-MM-DD.",
+                },
+                "end": {
+                    "type": "string",
+                    "description": "ISO date YYYY-MM-DD.",
+                },
+            },
+            "required": ["start", "end"],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
+        "name": "search_calendar_events",
+        "description": (
+            "Search the academic calendar by keyword in the event title "
+            "(case-insensitive). Use this for 'when is X' questions, such "
+            "as 'when is the next Open Day' or 'when do exams start'."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "keyword": {
+                    "type": "string",
+                    "description": "Word or phrase to search for in event titles.",
+                }
+            },
+            "required": ["keyword"],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
+        "name": "get_calendar_categories",
+        "description": (
+            "List the available academic-calendar event categories with their "
+            "counts. Use this when the user asks what kinds of calendar "
+            "events exist."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
+        "name": "get_calendar_overview",
+        "description": (
+            "Get a high-level overview of the stored academic calendar: date "
+            "range and per-month event counts. Use this when the user asks "
+            "for a summary of the calendar or what period it covers."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": [],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
 ]
 
 
@@ -239,5 +361,26 @@ def execute_tool(
             question=arguments["question"],
             category=arguments["category"],
         )
+
+    if tool_name == "refresh_calendar":
+        return refresh_calendar()
+
+    if tool_name == "get_calendar_events_on_date":
+        return get_calendar_events_on_date(date=arguments["date"])
+
+    if tool_name == "get_calendar_events_in_range":
+        return get_calendar_events_in_range(
+            start=arguments["start"],
+            end=arguments["end"],
+        )
+
+    if tool_name == "search_calendar_events":
+        return search_calendar_events(keyword=arguments["keyword"])
+
+    if tool_name == "get_calendar_categories":
+        return get_calendar_categories()
+
+    if tool_name == "get_calendar_overview":
+        return get_calendar_overview()
 
     raise ValueError(f"Unknown tool: {tool_name}")
