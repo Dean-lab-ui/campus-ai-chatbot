@@ -32,6 +32,18 @@
             >
         </section>
 
+        <form id="pdfUploadForm" class="pdf-upload-form">
+            <label for="pdfFile">Ask about a PDF</label>
+            <input
+                id="pdfFile"
+                type="file"
+                accept=".pdf,application/pdf"
+                required
+            >
+            <button id="uploadPdfButton" type="submit">Upload PDF</button>
+            <span id="pdfStatus" role="status">No PDF uploaded</span>
+        </form>
+
         <section
             id="messages"
             class="messages"
@@ -43,7 +55,8 @@
                 <div class="message-bubble">
                     Hello! I can help you check campus notices, safety
                     risks, email summaries, staff contacts and support
-                    tickets. What would you like to know?
+                    tickets. Upload a text-based PDF to ask questions about
+                    its contents. What would you like to know?
                 </div>
             </div>
         </section>

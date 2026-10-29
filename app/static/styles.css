@@ -145,6 +145,59 @@ textarea {
     background: white;
 }
 
+.pdf-upload-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 22px;
+
+    border-bottom: 1px solid var(--border);
+    background: white;
+}
+
+.pdf-upload-form label {
+    flex-shrink: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.pdf-upload-form input {
+    min-width: 0;
+    flex: 1;
+    font-size: 0.8rem;
+}
+
+.pdf-upload-form button {
+    flex-shrink: 0;
+    padding: 8px 11px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: var(--accent);
+    color: white;
+
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.pdf-upload-form button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+#pdfStatus {
+    max-width: 150px;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .user-section input:focus,
 .message-form textarea:focus {
     outline: 3px solid rgba(47, 118, 186, 0.18);
@@ -342,6 +395,7 @@ textarea {
 
     .chat-header,
     .user-section,
+    .pdf-upload-form,
     .messages,
     .quick-actions,
     .message-form {
@@ -351,6 +405,14 @@ textarea {
 
     .message {
         max-width: 90%;
+    }
+
+    .pdf-upload-form {
+        flex-wrap: wrap;
+    }
+
+    .pdf-upload-form input {
+        min-width: 130px;
     }
 
     .keyboard-hint {

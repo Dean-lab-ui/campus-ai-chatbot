@@ -5,8 +5,13 @@ const messages = document.getElementById("messages");
 const sendButton = document.getElementById("sendButton");
 const connectionStatus = document.getElementById("connectionStatus");
 const quickActionButtons = document.querySelectorAll(".quick-action");
+const pdfUploadForm = document.getElementById("pdfUploadForm");
+const pdfFileInput = document.getElementById("pdfFile");
+const uploadPdfButton = document.getElementById("uploadPdfButton");
+const pdfStatus = document.getElementById("pdfStatus");
 
 let requestInProgress = false;
+const maxPdfSize = 10 * 1024 * 1024;
 
 
 function addFormattedText(element, text) {
@@ -66,6 +71,8 @@ function setLoading(isLoading) {
     quickActionButtons.forEach((button) => {
         button.disabled = isLoading;
     });
+    pdfFileInput.disabled = isLoading;
+    uploadPdfButton.disabled = isLoading;
 
     if (isLoading) {
         connectionStatus.textContent = "Thinking...";
@@ -74,6 +81,56 @@ function setLoading(isLoading) {
         connectionStatus.textContent = "Ready";
         connectionStatus.className = "status";
         messageInput.focus();
+    }
+}
+
+
+async function uploadPdf(file) {
+    const userId = userIdInput.value.trim();
+
+    if (!userId) {
+        addMessage(
+            "assistant",
+            "Please enter a demo user ID before uploading a PDF.",
+            true
+        );
+        return;
+    }
+
+    if (file.size > maxPdfSize) {
+        addMessage("assistant", "PDF files must be 10 MB or smaller.", true);
+        return;
+    }
+
+    setLoading(true);
+    pdfStatus.textContent = "Uploading...";
+
+    try {
+        const formData = new FormData();
+        formData.append("user_id", userId);
+        formData.append("pdf_file", file);
+
+        const response = await fetch("/documents/pdf", {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || `The server returned status ${response.status}.`);
+        }
+
+        pdfStatus.textContent = `${data.filename} ready`;
+        addMessage(
+            "assistant",
+            `${data.filename} is ready to search. Ask me a question about it.`
+        );
+    } catch (error) {
+        console.error(error);
+        pdfStatus.textContent = "Upload failed";
+        addMessage("assistant", error.message, true);
+    } finally {
+        setLoading(false);
     }
 }
 
@@ -151,6 +208,16 @@ async function sendMessage(messageText) {
 chatForm.addEventListener("submit", (event) => {
     event.preventDefault();
     sendMessage(messageInput.value);
+});
+
+
+pdfUploadForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const file = pdfFileInput.files[0];
+
+    if (file && !requestInProgress) {
+        uploadPdf(file);
+    }
 });
 
 

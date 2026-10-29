@@ -7,6 +7,7 @@ from app.data_store import (
     get_ticket,
     search_staff,
 )
+from app.pdf_documents import search_uploaded_pdf
 
 
 TOOL_DEFINITIONS = [
@@ -149,6 +150,27 @@ TOOL_DEFINITIONS = [
     },
     {
         "type": "function",
+        "name": "search_uploaded_pdf",
+        "description": (
+            "Search the PDF uploaded by the current user for information "
+            "relevant to their question. Use this for questions about the "
+            "uploaded PDF, and answer only from the returned passages."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "The user's question about the uploaded PDF.",
+                }
+            },
+            "required": ["query"],
+            "additionalProperties": False,
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
         "name": "create_inquiry",
         "description": (
             "Log a campus-related question that could not be answered. "
@@ -183,6 +205,12 @@ def execute_tool(
     arguments: dict,
     user_id: str,
 ):
+    if tool_name == "search_uploaded_pdf":
+        return search_uploaded_pdf(
+            user_id=user_id,
+            query=arguments["query"],
+        )
+
     if tool_name == "get_active_notices":
         return get_active_notices()
 

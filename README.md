@@ -24,8 +24,24 @@ The chatbot can:
 - Create support tickets after confirmation
 - Display active campus safety risks
 - Summarize recent campus emails
+- Read and search text-based PDFs uploaded in the chat
 - Log unanswered questions as inquiries
 - Remember previous messages during the current session
+
+### Asking Questions About a PDF
+
+In the chat, select a PDF and choose **Upload PDF**. Once it is ready, ask
+questions about the document in the normal chat box. The chatbot searches
+relevant extracted passages rather than sending the entire PDF to the AI. To
+limit token use, each search sends at most two short passages (up to 1,200
+characters total) to the AI. The server extracts and searches the PDF locally;
+that local search does not send every page to the AI.
+
+Uploads must be 10 MB or smaller and have no more than 500 pages. The PDF
+must contain selectable text; scanned PDFs require OCR before they can be
+searched. Uploaded document text is held in server memory for the current
+process and is associated with the entered demo user ID. It is not retained
+after the server restarts.
 
 ## How It Works
 
